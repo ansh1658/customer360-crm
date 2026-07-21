@@ -78,43 +78,54 @@ data-bs-target="#menu">
 <div
 class="collapse navbar-collapse"
 id="menu">
+<ul class="navbar-nav ms-auto align-items-center">
 
-<ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+            <i class="fa-solid fa-house"></i> Dashboard
+        </a>
+    </li>
 
-<li class="nav-item">
-<a class="nav-link"
-href="{% url 'dashboard' %}">
-<i class="fa-solid fa-house"></i>
-Dashboard
-</a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'communication_list' %}">
+            <i class="fa-solid fa-comments"></i> Communications
+        </a>
+    </li>
 
-<li class="nav-item">
-<a class="nav-link"
-href="{% url 'communication_list' %}">
-<i class="fa-solid fa-comments"></i>
-Communications
-</a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'add_communication' %}">
+            <i class="fa-solid fa-plus"></i> Add
+        </a>
+    </li>
 
-<li class="nav-item">
-<a class="nav-link"
-href="{% url 'add_communication' %}">
-<i class="fa-solid fa-plus"></i>
-Add
-</a>
-</li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/">
+            <i class="fa-solid fa-user-shield"></i> Admin
+        </a>
+    </li>
 
-<li class="nav-item">
-<a class="nav-link"
-href="/admin/">
-<i class="fa-solid fa-user-shield"></i>
-Admin
-</a>
-</li>
+    {% if user.is_authenticated %}
+
+    <li class="nav-item ms-3">
+        <span class="navbar-text text-white">
+            <i class="fa-solid fa-user"></i>
+            {{ user.username }}
+        </span>
+    </li>
+
+    <li class="nav-item ms-2">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-light btn-sm">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </button>
+        </form>
+    </li>
+
+    {% endif %}
 
 </ul>
-
 </div>
 
 </div>

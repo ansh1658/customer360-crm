@@ -7,11 +7,12 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 from .forms import CommunicationForm
 from .models import Communication
 
-
+@login_required
 def dashboard(request):
     total = Communication.objects.count()
 
