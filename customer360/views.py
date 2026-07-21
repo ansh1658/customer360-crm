@@ -124,3 +124,89 @@ def export_csv(request):
         )
 
     return response
+
+def add_communication(request):
+    if request.method == "POST":
+        form = CommunicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Communication added successfully.")
+            return redirect("communication_list")
+    else:
+        form = CommunicationForm()
+
+    return render(
+        request,
+        "customer360/communication_form.html",
+        {
+            "form": form,
+            "title": "Add Communication",
+        },
+    )
+
+
+def edit_communication(request, pk):
+    communication = get_object_or_404(
+        Communication,
+        pk=pk,
+    )
+
+    if request.method == "POST":
+        form = CommunicationForm(
+            request.POST,
+            instance=communication,
+        )
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Communication updated successfully.")
+            return redirect("communication_list")
+    else:
+        form = CommunicationForm(instance=communication)
+
+    return render(
+        request,
+        "customer360/communication_form.html",
+        {
+            "form": form,
+            "title": "Edit Communication",
+        },
+    )
+
+
+def delete_communication(request, pk):
+    communication = get_object_or_404(
+        Communication,
+        pk=pk,
+    )
+
+    if request.method == "POST":
+        communication.delete()
+        messages.success(request, "Communication deleted successfully.")
+        return redirect("communication_list")
+
+    return render(
+        request,
+        "customer360/communication_confirm_delete.html",
+        {
+            "communication": communication,
+        },
+    )
+
+
+def customer_detail(request, customer_name):
+    communications = (
+        Communication.objects.filter(
+            customer_name=customer_name
+        )
+        .order_by("-created_at")
+    )
+
+    return render(
+        request,
+        "customer360/customer_detail.html",
+        {
+            "customer_name": customer_name,
+            "communications": communications,
+        },
+    )
