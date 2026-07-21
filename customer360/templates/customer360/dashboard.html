@@ -1,0 +1,166 @@
+{% extends "customer360/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">
+Dashboard
+</h2>
+
+<div class="row g-4 mb-4">
+
+<div class="col-md-3">
+
+<div class="card text-center">
+
+<div class="card-body">
+
+<i class="fa-solid fa-comments fa-2x text-primary mb-3"></i>
+
+<h6>Total Communications</h6>
+
+<h2>{{ total }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card text-center">
+
+<div class="card-body">
+
+<i class="fa-solid fa-arrow-down fa-2x text-success mb-3"></i>
+
+<h6>Inbound</h6>
+
+<h2>{{ inbound }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card text-center">
+
+<div class="card-body">
+
+<i class="fa-solid fa-arrow-up fa-2x text-warning mb-3"></i>
+
+<h6>Outbound</h6>
+
+<h2>{{ outbound }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card text-center">
+
+<div class="card-body">
+
+<i class="fa-solid fa-calendar fa-2x text-info mb-3"></i>
+
+<h6>Last 30 Days</h6>
+
+<h2>{{ last30 }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-header">
+
+<h5 class="mb-0">
+Recent Communications
+</h5>
+
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-hover mb-0">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Customer</th>
+<th>Channel</th>
+<th>Direction</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for communication in recent %}
+
+<tr>
+
+<td>{{ communication.customer_name }}</td>
+
+<td>{{ communication.channel }}</td>
+
+<td>
+
+{% if communication.direction == "Inbound" %}
+
+<span class="badge bg-success">
+Inbound
+</span>
+
+{% else %}
+
+<span class="badge bg-warning text-dark">
+Outbound
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="3"
+class="text-center">
+
+No communication available.
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}
